@@ -19,11 +19,12 @@ const AblyChatComponent = () => {
   const [channel, ably] = useChannel("chat-demo", (message) => {
     const history = receivedMessages.slice(-199);
     setMessages([...history, message]);
-    speak({ text: `${userName} řekl: ${message.data}`});
+    console.log(message);
+    speak({ text: `${message.data.userName} řekl: ${message.data.text}`});
   });
 
   const sendChatMessage = (messageText) => {
-    channel.publish({ name: "chat-message", data: messageText });
+    channel.publish({ name: "chat-message", data: {userName: userName, text: messageText}});
     setMessageText("");
     inputBox.focus();
   }
@@ -43,7 +44,7 @@ const AblyChatComponent = () => {
 
   const messages = receivedMessages.map((message, index) => {
     const author = message.connectionId === ably.connection.id ? "me" : "other";
-    return <span key={index} className={styles.message} data-author={author}>{message.data}</span>;
+    return <span key={index} className={styles.message} data-author={author}>{message.data.text}</span>;
   });
 
   useEffect(() => {
