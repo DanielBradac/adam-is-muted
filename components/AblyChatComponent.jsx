@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useChannel } from "./AblyReactEffect";
 import styles from './AblyChatComponent.module.css';
 import { useSpeechSynthesis } from 'react-speech-kit';
+import  { getRandomName } from '../utils/Utils';
 
 const AblyChatComponent = () => {
 
@@ -17,7 +18,8 @@ const AblyChatComponent = () => {
   const [channel, ably] = useChannel("chat-demo", (message) => {
     const history = receivedMessages.slice(-199);
     setMessages([...history, message]);
-    speak({ text: message.data });
+    const name = getRandomName();
+    speak({ text: `${name} řekl: ${message.data}`});
   });
 
   const sendChatMessage = (messageText) => {
@@ -54,17 +56,19 @@ const AblyChatComponent = () => {
         {messages}
         <div ref={(element) => { messageEnd = element; }}></div>
       </div>
-      <form onSubmit={handleFormSubmission} className={styles.form}>
-        <textarea
-          ref={(element) => { inputBox = element; }}
-          value={messageText}
-          placeholder="Type a message..."
-          onChange={e => setMessageText(e.target.value)}
-          onKeyPress={handleKeyPress}
-          className={styles.textarea}
-        ></textarea>
-        <button type="submit" className={styles.button} disabled={messageTextIsEmpty}>Send</button>
-      </form>
+      <div>
+        <form onSubmit={handleFormSubmission} className={styles.form}>
+          <textarea
+            ref={(element) => { inputBox = element; }}
+            value={messageText}
+            placeholder="Type a message..."
+            onChange={e => setMessageText(e.target.value)}
+            onKeyPress={handleKeyPress}
+            className={styles.textarea}
+          ></textarea>
+          <button type="submit" className={styles.button} disabled={messageTextIsEmpty}>Send</button>
+        </form>
+      </div>
     </div>
   )
 }
