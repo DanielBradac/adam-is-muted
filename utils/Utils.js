@@ -1,9 +1,10 @@
 export function getRandomName() {
     const dataSet = [
-        'Opice',
         'Debílek',
         'Amogus',
-        'Opičák'
+        'Opičák',
+        'Opičácký debílek',
+        'Tvůj táta'
     ];
     const index = (Math.floor(Math.random() * dataSet.length));
     return dataSet[index];

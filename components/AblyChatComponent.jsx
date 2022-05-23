@@ -14,12 +14,12 @@ const AblyChatComponent = () => {
   const [messageText, setMessageText] = useState("");
   const [receivedMessages, setMessages] = useState([]);
   const messageTextIsEmpty = messageText.trim().length === 0;
+  const [userName, setUserName] = useState(getRandomName());
 
   const [channel, ably] = useChannel("chat-demo", (message) => {
     const history = receivedMessages.slice(-199);
     setMessages([...history, message]);
-    const name = getRandomName();
-    speak({ text: `${name} řekl: ${message.data}`});
+    speak({ text: `${userName} řekl: ${message.data}`});
   });
 
   const sendChatMessage = (messageText) => {
@@ -56,8 +56,20 @@ const AblyChatComponent = () => {
         {messages}
         <div ref={(element) => { messageEnd = element; }}></div>
       </div>
-      <div>
-        <form onSubmit={handleFormSubmission} className={styles.form}>
+      <table>
+        <tr className={styles.textInputTableHead}>
+          <th>Username</th>
+          <th>Message</th>
+        </tr>
+        <tr>
+          <td><textarea
+            ref={(element) => { inputBox = element; }}
+            value={userName}
+            placeholder="Type a message..."
+            onChange={e => setUserName(e.target.value)}
+          ></textarea></td>
+          <td>
+          <form onSubmit={handleFormSubmission} className={styles.form}>
           <textarea
             ref={(element) => { inputBox = element; }}
             value={messageText}
@@ -68,7 +80,9 @@ const AblyChatComponent = () => {
           ></textarea>
           <button type="submit" className={styles.button} disabled={messageTextIsEmpty}>Send</button>
         </form>
-      </div>
+          </td>
+        </tr>
+      </table>
     </div>
   )
 }
