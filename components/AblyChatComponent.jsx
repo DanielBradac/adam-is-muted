@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useChannel } from "./AblyReactEffect";
 import styles from './AblyChatComponent.module.css';
 import { useSpeechSynthesis } from 'react-speech-kit';
-import  { getRandomName } from '../utils/Utils';
+import  { getDefaultName, getRandomFact } from '../utils/Utils';
 
 const AblyChatComponent = () => {
 
@@ -14,19 +14,35 @@ const AblyChatComponent = () => {
   const [messageText, setMessageText] = useState("");
   const [receivedMessages, setMessages] = useState([]);
   const messageTextIsEmpty = messageText.trim().length === 0;
-  const [userName, setUserName] = useState(getRandomName());
+  const [userName, setUserName] = useState(getDefaultName());
+
+  const [messCounter, setMessCounter] = useState(0);
 
   const [channel, ably] = useChannel("chat-demo", (message) => {
     const history = receivedMessages.slice(-199);
     setMessages([...history, message]);
-    console.log(message);
-    speak({ text: `${message.data.userName} řekl: ${message.data.text}`});
+    if (message.data.userName === 'System') {
+      speak({ text: `Nerad tě vyrušuji, ale rád bych ti připomněl, že: ${message.data.text}`});
+    } else {
+      speak({ text: `${message.data.userName} řekl: ${message.data.text}`});
+    }
   });
 
   const sendChatMessage = (messageText) => {
     channel.publish({ name: "chat-message", data: {userName: userName, text: messageText}});
     setMessageText("");
     inputBox.focus();
+    setMessCounter(messCounter + 1);
+
+    // Make random annoucment in messCounter * 10 minutes
+    setTimeout(() => {
+      const fact = getRandomFact();
+      sendSystemMessage(`${fact}. Konec hlášení`);
+    }, (messCounter + 1) * 600000);
+  }
+
+  const sendSystemMessage = (messageText) => {
+    channel.publish({ name: "chat-message", data: {userName: 'System', text: messageText}});
   }
 
   const handleFormSubmission = (event) => {
@@ -58,31 +74,35 @@ const AblyChatComponent = () => {
         <div ref={(element) => { messageEnd = element; }}></div>
       </div>
       <table>
-        <tr className={styles.textInputTableHead}>
-          <th>Username</th>
-          <th>Message</th>
-        </tr>
-        <tr>
-          <td><textarea
-            ref={(element) => { inputBox = element; }}
-            value={userName}
-            placeholder="Type a message..."
-            onChange={e => setUserName(e.target.value)}
-          ></textarea></td>
-          <td>
-          <form onSubmit={handleFormSubmission} className={styles.form}>
-          <textarea
-            ref={(element) => { inputBox = element; }}
-            value={messageText}
-            placeholder="Type a message..."
-            onChange={e => setMessageText(e.target.value)}
-            onKeyPress={handleKeyPress}
-            className={styles.textarea}
-          ></textarea>
-          <button type="submit" className={styles.button} disabled={messageTextIsEmpty}>Send</button>
-        </form>
-          </td>
-        </tr>
+        <thead>
+          <tr className={styles.textInputTableHead}>
+            <th>Username</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><textarea
+              ref={(element) => { inputBox = element; }}
+              value={userName}
+              placeholder="Type a message..."
+              onChange={e => setUserName(e.target.value)}
+            ></textarea></td>
+            <td>
+              <form onSubmit={handleFormSubmission} className={styles.form}>
+                <textarea
+                  ref={(element) => { inputBox = element; }}
+                  value={messageText}
+                  placeholder="Type a message..."
+                  onChange={e => setMessageText(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  className={styles.textarea}
+                ></textarea>
+                <button type="submit" className={styles.button} disabled={messageTextIsEmpty}>Send</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   )
