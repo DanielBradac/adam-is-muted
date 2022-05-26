@@ -60,11 +60,13 @@ const AblyChatComponent = () => {
 
   const messages = receivedMessages.map((message, index) => {
   const author = message.connectionId === ably.connection.id ? "me" : "other";
+  const alignMessage = (author === "me")? "right":"left";
+  console.log(alignMessage);
     return (
-      <div>
+      <span key={index} align-message={alignMessage}>
         <div className={styles.messageHeader}>{message.data.userName + ':'}</div>
-        <div key={index} className={styles.message} data-author={author}>{message.data.text}</div>
-      </div>
+        <div className={styles.message} data-author={author}>{message.data.text}</div>
+      </span>
     );
   });
 

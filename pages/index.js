@@ -119,14 +119,17 @@ export default function Home() {
         [data-author="me"] {
           background: linear-gradient(to right, #363795, #005C97); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
           color: white;
-          align-self: flex-end;
           border-bottom-right-radius: 0!important;
           border-bottom-left-radius: 10px!important;
         }
         [data-author="System"] {
           background: ForestGreen;
           color: white;
-        }      
+        }
+        
+        [align-message="right"] {
+          align-self: flex-end;
+        }
       `}</style>
     </div>
   )

@@ -60,5 +60,6 @@
 .messageHeader {
     color: gray;
     font-size: 0.9em;
-    margin-left: 0.4em;
+    margin-left: 0.15em;
+    margin-right: 0.4em;
 }
