@@ -34,7 +34,7 @@ const AblyChatComponent = () => {
     inputBox.focus();
     setMessCounter(messCounter + 1);
 
-    // Make random annoucment in messCounter * 10 minutes
+    // Make random annoucement in messCounter * 10 minutes
     setTimeout(() => {
       const fact = getRandomFact();
       sendSystemMessage(`${fact}. Konec hlášení`);
@@ -59,9 +59,15 @@ const AblyChatComponent = () => {
   }
 
   const messages = receivedMessages.map((message, index) => {
-  const author = message.connectionId === ably.connection.id ? "me" : "other";
-  const alignMessage = (author === "me")? "right":"left";
-  console.log(alignMessage);
+  let author = "other";
+  if (message.connectionId === ably.connection.id) {
+    author = "me";
+  } else if (message.data.userName === "System") {
+    author = message.data.userName;
+  }
+
+  // We align out messages to right, others to left
+  const alignMessage = author === "me"? "right":"left";
     return (
       <span key={index} align-message={alignMessage}>
         <div className={styles.messageHeader}>{message.data.userName + ':'}</div>
