@@ -123,7 +123,7 @@ export default function Home() {
           border-bottom-left-radius: 10px!important;
         }
         [data-author="System"] {
-          background: ForestGreen;
+          background-color: ForestGreen;
           color: white;
         }
         
