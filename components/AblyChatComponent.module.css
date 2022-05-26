@@ -55,4 +55,10 @@
 .textInputTableHead {
     padding: 0;
     text-align: left;
-  }
+}
+
+.messageHeader {
+    color: gray;
+    font-size: 0.9em;
+    margin-left: 0.4em;
+}
