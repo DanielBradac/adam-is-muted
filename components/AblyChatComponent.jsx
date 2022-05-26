@@ -60,10 +60,10 @@ const AblyChatComponent = () => {
 
   const messages = receivedMessages.map((message, index) => {
   let author = "other";
-  if (message.connectionId === ably.connection.id) {
-    author = "me";
-  } else if (message.data.userName === "System") {
+  if (message.data.userName === "System") {
     author = message.data.userName;
+  } else if (message.connectionId === ably.connection.id) {
+    author = "me";
   }
 
   // We align out messages to right, others to left
