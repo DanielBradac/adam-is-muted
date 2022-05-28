@@ -23,7 +23,7 @@ export function getRandomFact() {
 
 // If message mateches keyword, we play an audio file instead of given message
 export function getAudioFileName(message) {
-    switch(message) {
+    switch(message.toLowerCase()) {
         case "sus":
             return "sus.mp3";
         case "amogus":
