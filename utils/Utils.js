@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-
 
 export function getDefaultName() {
     return 'Neumím si nastavit jméno';
@@ -24,19 +22,21 @@ export function getRandomFact() {
 // If message mateches keyword, we play an audio file instead of given message
 export function getAudioFileName(message) {
     switch(message.toLowerCase()) {
-        case "sus":
-            return "sus.mp3";
-        case "amogus":
-            return "amogus.mp3";
-        case "babage":
-            return "babage.mp3";
-        case "bruh":
-            return "bruh.mp3";
-        case "gay":
-            return "gay.mp3";
-        case "oof":
-            return "oof.mp3";
+        case 'sus':
+            return 'sus.mp3';
+        case 'amogus':
+            return 'amogus.mp3';
+        case 'babage':
+            return 'babage.mp3';
+        case 'bruh':
+            return 'bruh.mp3';
+        case 'gay':
+            return 'gay.mp3';
+        case 'oof':
+            return 'oof.mp3';
+        case 'what':
+            return 'what.mp3';
         default:
-          return "";
+          return '';
     } 
 }
