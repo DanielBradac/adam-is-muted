@@ -1,9 +1,11 @@
+import { Suspense } from "react";
 
 
 export function getDefaultName() {
     return 'Neumím si nastavit jméno';
 };
 
+// Random facts for system annoucements
 export function getRandomFact() {
     const facts = [
         'Astralis nejsou a nikdy nebyli dobrý tým.',
@@ -17,4 +19,24 @@ export function getRandomFact() {
     ]
 
     return facts[Math.floor(Math.random() * facts.length)];
+}
+
+// If message mateches keyword, we play an audio file instead of given message
+export function getAudioFileName(message) {
+    switch(message) {
+        case "sus":
+            return "sus.mp3";
+        case "amogus":
+            return "amogus.mp3";
+        case "babage":
+            return "babage.mp3";
+        case "bruh":
+            return "bruh.mp3";
+        case "gay":
+            return "gay.mp3";
+        case "oof":
+            return "oof.mp3";
+        default:
+          return "";
+    } 
 }

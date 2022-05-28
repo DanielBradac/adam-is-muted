@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useChannel } from "./AblyReactEffect";
 import styles from './AblyChatComponent.module.css';
 import { useSpeechSynthesis } from 'react-speech-kit';
-import  { getDefaultName, getRandomFact } from '../utils/Utils';
+import  { getDefaultName, getRandomFact, getAudioFileName } from '../utils/Utils';
 
 const AblyChatComponent = () => {
 
@@ -21,11 +21,20 @@ const AblyChatComponent = () => {
   const [channel, ably] = useChannel("chat-demo", (message) => {
     const history = receivedMessages.slice(-199);
     setMessages([...history, message]);
-    if (message.data.userName === 'System') {
-      speak({ text: `Nerad tě vyrušuji, ale rád bych ti připomněl, že: ${message.data.text}`});
-    } else {
-      speak({ text: `${message.data.userName} řekl: ${message.data.text}`});
+    
+    const songToPlay = getAudioFileName(message.data.text);
+
+    if (songToPlay) {
+      const audio = new Audio(songToPlay);
+      audio.volume = 0.2;
+      return audio.play();
     }
+
+    if (message.data.userName === 'System') {
+      return speak({ text: `Nerad tě vyrušuji, ale rád bych ti připomněl, že: ${message.data.text}`});
+    }
+    
+    speak({ text: `${message.data.userName} řekl: ${message.data.text}`});
   });
 
   const sendChatMessage = (messageText) => {
