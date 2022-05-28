@@ -123,7 +123,7 @@ export default function Home() {
           border-bottom-left-radius: 10px!important;
         }
         [data-author="System"] {
-          background-color: ForestGreen;
+          background: linear-gradient(to left, #187909, #56ff43); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
           color: white;
         }
         
