@@ -1,4 +1,3 @@
-
 export function getDefaultName() {
     return 'Neumím si nastavit jméno';
 };
@@ -21,7 +20,7 @@ export function getRandomFact() {
 
 // If message mateches keyword, we play an audio file instead of given message
 export function getAudioFileName(message) {
-    switch(message.toLowerCase()) {
+    switch (message.toLowerCase()) {
         case 'sus':
             return 'sus.mp3';
         case 'amogus':
@@ -29,14 +28,15 @@ export function getAudioFileName(message) {
         case 'babage':
             return 'babage.mp3';
         case 'bruh':
+            w
             return 'bruh.mp3';
         case 'gay':
             return 'gay.mp3';
         case 'oof':
-            return 'oof.mp3';
+            return 'v.mp3';
         case 'what':
             return 'what.mp3';
         default:
-          return '';
-    } 
+            return '';
+    }
 }

@@ -42,12 +42,13 @@ const AblyChatComponent = () => {
     setMessageText("");
     inputBox.focus();
     setMessCounter(messCounter + 1);
-
+    /*
     // Make random annoucement in messCounter * 10 minutes
     setTimeout(() => {
       const fact = getRandomFact();
       sendSystemMessage(`${fact}. Konec hlášení`);
     }, (messCounter + 1) * 600000);
+    */
   }
 
   const sendSystemMessage = (messageText) => {
