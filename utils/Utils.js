@@ -28,12 +28,11 @@ export function getAudioFileName(message) {
         case 'babage':
             return 'babage.mp3';
         case 'bruh':
-            w
             return 'bruh.mp3';
         case 'gay':
             return 'gay.mp3';
         case 'oof':
-            return 'v.mp3';
+            return 'oof.mp3';
         case 'what':
             return 'what.mp3';
         default:
